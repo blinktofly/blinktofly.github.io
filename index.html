@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="description" content="Blink to Fly — Android игра: моргнул — птичка подпрыгнула. Скачать в RuStore." />
+  <meta name="description" content="Blink to Fly — Android игра: моргнул — птичка подпрыгнула. Скачать в RuStore или APK." />
   <meta name="theme-color" content="#0b0f1a" />
   <title>Blink to Fly — моргни и взлетай</title>
 
@@ -142,6 +142,16 @@
         0 18px 55px rgba(255,43,214,0.10);
     }
     .btn-primary:hover{ border-color: rgba(0,245,255,0.55); }
+
+    /* APK button (secondary emphasis) */
+    .btn-secondary{
+      border-color: rgba(255,255,255,0.20);
+      background: rgba(0,0,0,0.18);
+    }
+    .btn-secondary:hover{
+      border-color: rgba(255,255,255,0.32);
+      background: rgba(255,255,255,0.07);
+    }
 
     .hero{
       margin-top: 10px;
@@ -390,6 +400,14 @@
     }
     .link:hover{ color: rgba(234,240,255,0.95); border-bottom-color: rgba(234,240,255,0.5); }
 
+    .counter-wrap{
+      margin-top: 14px;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      width:100%;
+    }
+
     .sr-only{
       position:absolute;
       width:1px;height:1px;
@@ -413,10 +431,15 @@
 
       <div class="top-actions">
         <a class="btn" href="#how">Как играть</a>
+
         <a class="btn btn-primary" target="_blank" rel="noopener"
            href="https://www.rustore.ru/catalog/app/com.blinktofly.game">
           <span class="glyph" aria-hidden="true"></span>
           Скачать в RuStore
+        </a>
+
+        <a class="btn btn-secondary" href="https://github.com/blinktofly/blinktofly.github.io/releases/download/1.2.1/blinktofly-1.2.1.apk" download>
+          Скачать APK
         </a>
       </div>
     </header>
@@ -447,8 +470,13 @@
             <a class="btn btn-primary" target="_blank" rel="noopener"
                href="https://www.rustore.ru/catalog/app/com.blinktofly.game">
               <span class="glyph" aria-hidden="true"></span>
-              Скачать Blink to Fly
+              Скачать в RuStore
             </a>
+
+            <a class="btn btn-secondary" href="https://github.com/blinktofly/blinktofly.github.io/releases/download/1.2.1/blinktofly-1.2.1.apk" download>
+              Скачать APK
+            </a>
+
             <a class="btn" href="#features">Фишки</a>
           </div>
         </div>
@@ -528,6 +556,11 @@
             <span class="glyph" aria-hidden="true"></span>
             Скачать в RuStore
           </a>
+
+          <a class="btn btn-secondary" href="https://github.com/blinktofly/blinktofly.github.io/releases/download/1.2.1/blinktofly-1.2.1.apk" download>
+            Скачать APK
+          </a>
+
           <a class="btn" href="#top">Наверх</a>
         </div>
       </div>
@@ -541,6 +574,13 @@
         <a class="link" href="#features">Фишки</a>
       </div>
     </footer>
+
+    <!-- Counter centered at the very bottom -->
+    <div class="counter-wrap" aria-label="Счетчик посещений">
+      <!-- Код значка — не меняйте код -->
+      <a class="hitCounter" href="https://visitorshitcounter.com/" target="_blank" title="Hit counter" data-name="2346bfd2b47199ea954130733879cb0b|5|external|1|#000000|#24fffb|large|s-hit">Счетчик посещений</a><script>document.write("<script type='text/javascript' src='https://visitorshitcounter.com/js/hitCounter.js?v="+Date.now()+"'><\/script>");</script>
+      <!-- Код значка заканчивается здесь -->
+    </div>
   </div>
 
   <script>
