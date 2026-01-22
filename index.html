@@ -1,0 +1,540 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="Blink to Fly — Android игра с управлением взглядом. Скачать в RuStore." />
+  <meta name="theme-color" content="#0b0f1a" />
+  <title>Blink to Fly — Управление взглядом</title>
+
+  <!-- Performance: preconnect fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Light font stack: one family, few weights -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg0:#070a12;
+      --bg1:#0b1030;
+      --card: rgba(255,255,255,0.06);
+      --border: rgba(255,255,255,0.14);
+      --text:#eaf0ff;
+      --muted: rgba(234,240,255,0.72);
+      --neon1:#00f5ff;
+      --neon2:#ff2bd6;
+      --neon3:#7c3cff;
+      --good:#35ff8a;
+      --shadow: 0 22px 70px rgba(0,0,0,0.55);
+      --radius: 22px;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      color:var(--text);
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background:
+        radial-gradient(1200px 600px at 15% 20%, rgba(0,245,255,0.12), transparent 60%),
+        radial-gradient(900px 500px at 80% 25%, rgba(255,43,214,0.12), transparent 55%),
+        radial-gradient(900px 650px at 55% 90%, rgba(124,60,255,0.12), transparent 60%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+      overflow-x:hidden;
+    }
+
+    /* Subtle animated scanlines (cheap) */
+    body::before{
+      content:"";
+      position:fixed; inset:0;
+      pointer-events:none;
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(255,255,255,0.03),
+        rgba(255,255,255,0.03) 1px,
+        rgba(0,0,0,0) 3px,
+        rgba(0,0,0,0) 6px
+      );
+      mix-blend-mode: overlay;
+      opacity:.25;
+      transform: translateZ(0);
+      animation: scan 8s linear infinite;
+    }
+    @keyframes scan{
+      from{ background-position: 0 0; }
+      to{ background-position: 0 120px; }
+    }
+
+    .wrap{
+      max-width: 1020px;
+      margin: 0 auto;
+      padding: 28px 18px 60px;
+    }
+
+    header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      padding: 8px 2px 18px;
+    }
+
+    .brand{
+      display:flex; align-items:center; gap:12px;
+      text-decoration:none; color:inherit;
+    }
+    .logo{
+      width:44px;height:44px;border-radius:14px;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(0,245,255,0.95), transparent 60%),
+        radial-gradient(circle at 70% 70%, rgba(255,43,214,0.95), transparent 55%),
+        linear-gradient(135deg, rgba(255,255,255,0.10), rgba(255,255,255,0.02));
+      border: 1px solid rgba(255,255,255,0.18);
+      box-shadow: 0 0 0 6px rgba(0,245,255,0.06), 0 0 0 12px rgba(255,43,214,0.04);
+    }
+    .brand h1{
+      margin:0;
+      font-family: Orbitron, Inter, sans-serif;
+      font-weight: 700;
+      letter-spacing: .02em;
+      font-size: 16px;
+      line-height:1.1;
+    }
+    .brand small{
+      display:block;
+      margin-top:4px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing:.02em;
+    }
+
+    .top-actions{
+      display:flex; gap:10px; flex-wrap:wrap;
+    }
+
+    .btn{
+      appearance:none;
+      border: 1px solid rgba(255,255,255,0.16);
+      background: rgba(255,255,255,0.06);
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 14px;
+      text-decoration:none;
+      font-weight: 600;
+      font-size: 13px;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      transition: transform .15s ease, border-color .15s ease, box-shadow .15s ease, background .15s ease;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+      backdrop-filter: blur(8px);
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      border-color: rgba(255,255,255,0.26);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.35);
+      background: rgba(255,255,255,0.08);
+    }
+    .btn-primary{
+      border-color: rgba(0,245,255,0.35);
+      background: linear-gradient(135deg, rgba(0,245,255,0.18), rgba(255,43,214,0.10));
+      box-shadow:
+        0 18px 50px rgba(0,245,255,0.12),
+        0 18px 55px rgba(255,43,214,0.10);
+    }
+    .btn-primary:hover{
+      border-color: rgba(0,245,255,0.55);
+    }
+
+    .hero{
+      margin-top: 10px;
+      display:grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    @media (max-width: 880px){
+      .hero{ grid-template-columns: 1fr; }
+      header{ flex-direction:column; align-items:flex-start; }
+    }
+
+    .card{
+      position:relative;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+
+    /* Neon frame */
+    .card::before{
+      content:"";
+      position:absolute; inset:-2px;
+      background: linear-gradient(90deg, rgba(0,245,255,0.45), rgba(255,43,214,0.35), rgba(124,60,255,0.35));
+      filter: blur(18px);
+      opacity: .30;
+      pointer-events:none;
+    }
+
+    .card-inner{
+      position:relative;
+      padding: 22px;
+    }
+
+    .kicker{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(0,0,0,0.18);
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .dot{
+      width:10px;height:10px;border-radius:999px;
+      background: var(--good);
+      box-shadow: 0 0 18px rgba(53,255,138,0.45);
+    }
+
+    .title{
+      margin: 14px 0 10px;
+      font-family: Orbitron, Inter, sans-serif;
+      font-weight: 700;
+      letter-spacing: .01em;
+      font-size: clamp(26px, 3.5vw, 44px);
+      line-height: 1.08;
+    }
+
+    .subtitle{
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.6;
+      max-width: 62ch;
+    }
+
+    .badges{
+      display:flex; flex-wrap:wrap; gap:10px;
+      margin: 12px 0 18px;
+    }
+    .pill{
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(0,0,0,0.18);
+      padding: 10px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      color: rgba(234,240,255,0.86);
+      display:flex; align-items:center; gap:10px;
+      backdrop-filter: blur(8px);
+    }
+    .pill b{ font-weight: 700; }
+    .glyph{
+      width:18px;height:18px;
+      border-radius: 6px;
+      background: linear-gradient(135deg, rgba(0,245,255,0.95), rgba(255,43,214,0.85));
+      box-shadow: 0 0 22px rgba(0,245,255,0.14);
+    }
+
+    .cta-row{
+      display:flex; gap:10px; flex-wrap:wrap;
+      margin-top: 14px;
+    }
+
+    .mini{
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 12px;
+    }
+
+    /* Right side mock */
+    .mock{
+      height: 100%;
+      min-height: 360px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+    }
+
+    .phone{
+      aspect-ratio: 9 / 19.5;
+      width: min(340px, 100%);
+      margin: 10px auto 0;
+      border-radius: 28px;
+      border: 1px solid rgba(255,255,255,0.16);
+      background:
+        radial-gradient(800px 400px at 30% 20%, rgba(0,245,255,0.18), transparent 60%),
+        radial-gradient(600px 380px at 70% 35%, rgba(255,43,214,0.16), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,0.06), rgba(0,0,0,0.18));
+      box-shadow: 0 30px 90px rgba(0,0,0,0.55);
+      position:relative;
+      overflow:hidden;
+    }
+    .phone::before{
+      content:"";
+      position:absolute; inset:0;
+      background:
+        repeating-linear-gradient(90deg, rgba(255,255,255,0.05), rgba(255,255,255,0.05) 1px, rgba(0,0,0,0) 6px, rgba(0,0,0,0) 12px);
+      opacity:.18;
+      pointer-events:none;
+    }
+
+    .screen{
+      position:absolute; inset:12px;
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background:
+        radial-gradient(650px 380px at 40% 30%, rgba(124,60,255,0.22), transparent 65%),
+        linear-gradient(180deg, rgba(0,0,0,0.10), rgba(0,0,0,0.35));
+      overflow:hidden;
+      padding: 16px;
+    }
+
+    .hud{
+      display:flex; align-items:center; justify-content:space-between;
+      font-family: Orbitron, Inter, sans-serif;
+      font-size: 12px;
+      opacity: .9;
+    }
+    .hud span{
+      color: rgba(234,240,255,0.85);
+    }
+
+    .wave{
+      margin-top: 14px;
+      height: 120px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background:
+        linear-gradient(90deg, rgba(0,245,255,0.18), rgba(255,43,214,0.12)),
+        radial-gradient(180px 80px at 20% 50%, rgba(0,245,255,0.25), transparent 70%),
+        radial-gradient(180px 80px at 80% 50%, rgba(255,43,214,0.22), transparent 70%);
+      position:relative;
+      overflow:hidden;
+    }
+    .wave::before{
+      content:"";
+      position:absolute; inset:0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.22), transparent);
+      transform: translateX(-60%);
+      animation: sweep 3.2s ease-in-out infinite;
+      opacity: .25;
+    }
+    @keyframes sweep{
+      0%{ transform: translateX(-60%); }
+      50%{ transform: translateX(60%); }
+      100%{ transform: translateX(160%); }
+    }
+
+    .mini-features{
+      margin-top: 14px;
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:10px;
+    }
+    .mini-item{
+      padding: 12px 12px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(0,0,0,0.14);
+      color: rgba(234,240,255,0.82);
+      font-size: 13px;
+      line-height:1.35;
+    }
+
+    .grid{
+      margin-top: 18px;
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    @media (max-width: 880px){
+      .grid{ grid-template-columns: 1fr; }
+    }
+
+    .grid .card-inner{ padding: 18px; }
+    .h3{
+      margin:0 0 8px;
+      font-family: Orbitron, Inter, sans-serif;
+      letter-spacing:.02em;
+      font-size: 16px;
+    }
+    .p{
+      margin:0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    footer{
+      margin-top: 22px;
+      padding-top: 14px;
+      color: rgba(234,240,255,0.55);
+      font-size: 12px;
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .link{
+      color: rgba(234,240,255,0.70);
+      text-decoration:none;
+      border-bottom: 1px dashed rgba(234,240,255,0.28);
+    }
+    .link:hover{ color: rgba(234,240,255,0.92); border-bottom-color: rgba(234,240,255,0.5); }
+
+    /* Accessibility */
+    .sr-only{
+      position:absolute;
+      width:1px;height:1px;
+      padding:0;margin:-1px;
+      overflow:hidden;clip:rect(0,0,0,0);
+      border:0;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <a class="brand" href="#top" aria-label="Blink to Fly">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <h1>Blink to Fly</h1>
+          <small>Android • Управление взглядом</small>
+        </div>
+      </a>
+
+      <div class="top-actions">
+        <a class="btn" href="#features">Фишки</a>
+        <a class="btn btn-primary" target="_blank" rel="noopener"
+           href="https://www.rustore.ru/catalog/app/com.blinktofly.game">
+          <span class="glyph" aria-hidden="true"></span>
+          Скачать в RuStore
+        </a>
+      </div>
+    </header>
+
+    <main id="top" class="hero">
+      <!-- Left -->
+      <section class="card">
+        <div class="card-inner">
+          <div class="kicker"><span class="dot" aria-hidden="true"></span> NEURO-ARCADE MODE</div>
+
+          <h2 class="title">Моргни — и взлетай.</h2>
+          <p class="subtitle">
+            <b>Blink to Fly</b> — динамичная Android-игра, где управление завязано на <b>взгляд</b> и <b>моргание</b>.
+            Быстро, необычно, затягивает с первых секунд.
+          </p>
+
+          <div class="badges">
+            <div class="pill"><span class="glyph" aria-hidden="true"></span> <b>Контроль:</b> взгляд / моргание</div>
+            <div class="pill"><span class="glyph" aria-hidden="true"></span> <b>Сессии:</b> 30–90 секунд</div>
+            <div class="pill"><span class="glyph" aria-hidden="true"></span> <b>Скилл:</b> реакция + фокус</div>
+          </div>
+
+          <div class="cta-row">
+            <a class="btn btn-primary" target="_blank" rel="noopener"
+               href="https://www.rustore.ru/catalog/app/com.blinktofly.game">
+              <span class="glyph" aria-hidden="true"></span>
+              Скачать Blink to Fly
+            </a>
+            <a class="btn" href="#how">Как играть</a>
+          </div>
+
+          <p class="mini">
+            *Официальная страница загрузки ведёт в RuStore. Никаких лишних скриптов — сайт лёгкий и быстрый.
+          </p>
+        </div>
+      </section>
+
+      <!-- Right -->
+      <aside class="card mock" aria-label="Preview">
+        <div class="card-inner">
+          <div class="phone" aria-hidden="true">
+            <div class="screen">
+              <div class="hud">
+                <span>BLINK-TO-FLY</span>
+                <span>FPS 60</span>
+              </div>
+
+              <div class="wave" aria-hidden="true"></div>
+
+              <div class="mini-features">
+                <div class="mini-item">🎯 Фокусируйся на цели — движение следует за взглядом</div>
+                <div class="mini-item">⚡ Моргай вовремя — уклоняйся и ускоряйся</div>
+                <div class="mini-item">🏁 Побей рекорд — короткие раунды, чистый азарт</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <section id="features" class="grid" aria-label="Features">
+      <article class="card">
+        <div class="card-inner">
+          <h3 class="h3">Кибер-динамика</h3>
+          <p class="p">Короткие интенсивные забеги: идеально под шорт-формат и “ещё одну попытку”.</p>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card-inner">
+          <h3 class="h3">Управление взглядом</h3>
+          <p class="p">Необычная механика: внимание, реакция, контроль — игра ощущается иначе, чем классика.</p>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card-inner">
+          <h3 class="h3">Лёгкая страница</h3>
+          <p class="p">Один файл HTML, без тяжёлых библиотек. Быстро грузится даже на слабом интернете.</p>
+        </div>
+      </article>
+    </section>
+
+    <section id="how" class="card" style="margin-top:12px;">
+      <div class="card-inner">
+        <h3 class="h3">Как играть</h3>
+        <p class="p">
+          1) Запусти игру и пройди калибровку (если есть).<br/>
+          2) Держи фокус на цели — перемещение следует за взглядом.<br/>
+          3) Моргай, чтобы выполнять действие (ускорение/манёвр) — тренируй тайминг.<br/>
+          4) Расти по рекордам: быстрее реакция — выше счёт.
+        </p>
+
+        <div class="cta-row" style="margin-top:14px;">
+          <a class="btn btn-primary" target="_blank" rel="noopener"
+             href="https://www.rustore.ru/catalog/app/com.blinktofly.game">
+            <span class="glyph" aria-hidden="true"></span>
+            Открыть RuStore и скачать
+          </a>
+          <a class="btn" href="#top">Наверх</a>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div>© <span id="y"></span> Blink to Fly</div>
+      <div>
+        <a class="link" target="_blank" rel="noopener"
+           href="https://www.rustore.ru/catalog/app/com.blinktofly.game">RuStore</a>
+        <span aria-hidden="true"> • </span>
+        <a class="link" href="#features">Фишки</a>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // Tiny script: year only
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
