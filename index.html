@@ -240,7 +240,7 @@
       margin-top: 12px;
     }
 
-    /* LEFT: Logo block */
+    /* LEFT: square logo.jpg fits */
     .logoCard{
       display:flex;
       flex-direction:column;
@@ -255,19 +255,23 @@
       display:flex;
       align-items:center;
       justify-content:center;
-      min-height: 260px;
+      /* Square-ish frame */
+      aspect-ratio: 1 / 1;
+      max-height: 340px;
+      overflow:hidden;
     }
     .logoFrame img{
       max-width: 100%;
-      max-height: 260px;
+      max-height: 100%;
       width: auto;
       height: auto;
       object-fit: contain;
-      image-rendering: auto;
+      border-radius: 14px;
       filter: drop-shadow(0 18px 40px rgba(0,0,0,0.35));
+      user-select:none;
     }
 
-    /* RIGHT: Carousel */
+    /* RIGHT: 9:16 carousel, never exceed its block */
     .carousel{
       display:flex;
       flex-direction:column;
@@ -280,8 +284,19 @@
       background: rgba(0,0,0,0.18);
       overflow:hidden;
       position:relative;
-      min-height: 360px;
+
+      /* Keep the carousel area controlled */
+      height: 560px;
+      max-height: 62vh;
+      min-height: 380px;
     }
+    @media (max-width: 920px){
+      .viewer{
+        height: 560px;
+        max-height: 70vh;
+      }
+    }
+
     .slides{
       display:flex;
       width: 400%;
@@ -291,19 +306,24 @@
     }
     .slide{
       width: 25%;
+      height: 100%;
       display:flex;
       align-items:center;
       justify-content:center;
-      padding: 12px;
+      padding: 14px;
     }
+
+    /* The image never grows beyond the viewer */
     .slide img{
-      width: 100%;
-      height: 100%;
-      max-height: 520px;
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
       object-fit: contain;
-      border-radius: 14px;
+      border-radius: 16px;
       border: 1px solid rgba(255,255,255,0.10);
       background: rgba(255,255,255,0.03);
+      user-select:none;
     }
 
     .controls{
@@ -337,17 +357,13 @@
       border-color: rgba(255,255,255,0.0);
       box-shadow: 0 0 18px rgba(0,245,255,0.18);
     }
-
     .hint{
       color: rgba(234,240,255,0.60);
       font-size: 12px;
       line-height:1.4;
     }
 
-    /* Sections below */
-    .section{
-      margin-top: 14px;
-    }
+    .section{ margin-top: 14px; }
 
     .grid{
       margin-top: 12px;
@@ -389,14 +405,6 @@
       border-bottom: 1px dashed rgba(234,240,255,0.28);
     }
     .link:hover{ color: rgba(234,240,255,0.95); border-bottom-color: rgba(234,240,255,0.5); }
-
-    .sr-only{
-      position:absolute;
-      width:1px;height:1px;
-      padding:0;margin:-1px;
-      overflow:hidden;clip:rect(0,0,0,0);
-      border:0;
-    }
   </style>
 </head>
 
@@ -422,25 +430,26 @@
     </header>
 
     <main id="top" class="hero">
-      <!-- LEFT: logo + текст -->
+      <!-- LEFT -->
       <section class="card">
         <div class="card-inner logoCard">
           <div class="kicker"><span class="dot" aria-hidden="true"></span> CYBER ARCADE</div>
 
           <h1 class="title">Моргни — и взлетай.</h1>
           <p class="subtitle">
-            <b>Blink to Fly</b> — игра, где основная механика простая и кайфовая:
-            <b>моргнул — птичка подпрыгнула</b>. А “<b>управление взглядом</b>” добавляет вау-эффект и атмосферу будущего.
+            <b>Blink to Fly</b> — игра, где основная механика простая:
+            <b>моргнул — птичка подпрыгнула</b>.
+            А “<b>управление взглядом</b>” добавляет футуристичный вайб и выделяет игру среди других.
           </p>
 
           <div class="logoFrame">
-            <img src="logo.png" alt="Blink to Fly — логотип" loading="eager" />
+            <img src="logo.jpg" alt="Blink to Fly — логотип" loading="eager" />
           </div>
 
           <div class="badges">
             <div class="pill"><span class="glyph" aria-hidden="true"></span> <b>Механика:</b> моргание</div>
-            <div class="pill"><span class="glyph" aria-hidden="true"></span> <b>Движение:</b> управление взглядом</div>
-            <div class="pill"><span class="glyph" aria-hidden="true"></span> <b>Сессии:</b> короткие раунды</div>
+            <div class="pill"><span class="glyph" aria-hidden="true"></span> <b>Хук:</b> управление взглядом</div>
+            <div class="pill"><span class="glyph" aria-hidden="true"></span> <b>Стиль:</b> аркада + рекорды</div>
           </div>
 
           <div class="cta-row">
@@ -454,7 +463,7 @@
         </div>
       </section>
 
-      <!-- RIGHT: carousel 1..4 -->
+      <!-- RIGHT -->
       <aside class="card" aria-label="Скриншоты игры">
         <div class="card-inner carousel">
           <div class="kicker"><span class="dot" aria-hidden="true"></span> GAME SCREENS</div>
@@ -481,9 +490,7 @@
               </div>
             </div>
 
-            <div class="hint">
-              Автопрокрутка • свайп на телефоне • кликай точки
-            </div>
+            <div class="hint">Автопрокрутка • свайп на телефоне • точки</div>
           </div>
         </div>
       </aside>
@@ -493,21 +500,21 @@
       <article class="card">
         <div class="card-inner">
           <h3 class="h3">Чистая механика</h3>
-          <p class="p">Моргнул — прыжок. Идеально для “ещё одну попытку” и коротких заходов.</p>
+          <p class="p">Моргнул — прыжок. Понятно с первой секунды.</p>
         </div>
       </article>
 
       <article class="card">
         <div class="card-inner">
           <h3 class="h3">Управление взглядом</h3>
-          <p class="p">Как маркетинговый хук: звучит футуристично и выделяет игру среди обычных аркад.</p>
+          <p class="p">Футуристичный хук, который цепляет внимание и запоминается.</p>
         </div>
       </article>
 
       <article class="card">
         <div class="card-inner">
           <h3 class="h3">Рекорды</h3>
-          <p class="p">Цель простая: дольше продержаться, точнее тайминг, выше счёт.</p>
+          <p class="p">Тренируй тайминг, улучшай результат, бей свой лучший забег.</p>
         </div>
       </article>
     </section>
@@ -516,10 +523,10 @@
       <div class="card-inner">
         <h3 class="h3">Как играть</h3>
         <p class="p">
-          1) Запусти игру и дай разрешение к камере.<br/>
-          2) Следи за ситуацией — “управление взглядом” создаёт эффект контроля.<br/>
-          3) Главный скилл: моргай вовремя — <b>птичка подпрыгивает</b> и ты проходишь препятствия.<br/>
-          4) Тренируй тайминг и бей рекорды.
+          1) Запусти игру и пройди калибровку.<br/>
+          2) Следи за игрой — “управление взглядом” создаёт эффект контроля.<br/>
+          3) Моргай вовремя — <b>птичка подпрыгивает</b> и проходит препятствия.<br/>
+          4) Бей рекорды: точнее тайминг — выше счёт.
         </p>
 
         <div class="cta-row" style="margin-top:14px;">
@@ -544,10 +551,8 @@
   </div>
 
   <script>
-    // year
     document.getElementById('y').textContent = new Date().getFullYear();
 
-    // carousel
     const slides = document.getElementById('slides');
     const dots = Array.from(document.querySelectorAll('.dotBtn'));
     const prev = document.getElementById('prev');
@@ -583,7 +588,7 @@
       });
     });
 
-    // Touch swipe (mobile)
+    // swipe
     let x0 = null;
     viewer.addEventListener('touchstart', (e) => {
       x0 = e.touches[0].clientX;
@@ -601,11 +606,10 @@
       startAuto();
     }, {passive:true});
 
-    // Pause on hover (desktop)
+    // pause on hover
     viewer.addEventListener('mouseenter', stopAuto);
     viewer.addEventListener('mouseleave', startAuto);
 
-    // init
     setIndex(0);
     startAuto();
   </script>
