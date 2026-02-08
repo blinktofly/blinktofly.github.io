@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="description" content="Blink to Fly — Android игра: моргнул — птичка подпрыгнула. Скачать в RuStore или APK." />
+  <meta name="description" content="Blink to Fly — Android игра: моргнул — птичка подпрыгнула. Скачать в Google Play, RuStore или APK." />
   <meta name="theme-color" content="#0b0f1a" />
   <title>Blink to Fly — моргни и взлетай</title>
 
@@ -41,25 +41,6 @@
         linear-gradient(180deg, var(--bg0), var(--bg1));
       overflow-x:hidden;
     }
-    body::before{
-      content:"";
-      position:fixed; inset:0;
-      pointer-events:none;
-      background: repeating-linear-gradient(
-        to bottom,
-        rgba(255,255,255,0.03),
-        rgba(255,255,255,0.03) 1px,
-        rgba(0,0,0,0) 3px,
-        rgba(0,0,0,0) 7px
-      );
-      opacity:.22;
-      mix-blend-mode: overlay;
-      animation: scan 9s linear infinite;
-    }
-    @keyframes scan{
-      from{ background-position: 0 0; }
-      to{ background-position: 0 140px; }
-    }
 
     .wrap{
       max-width: var(--maxw);
@@ -74,580 +55,188 @@
       gap:12px;
       padding: 6px 2px 16px;
     }
+
     .brand{
       display:flex; align-items:center; gap:12px;
       text-decoration:none; color:inherit;
-      min-width: 240px;
     }
+
     .logoBadge{
       width:44px;height:44px;border-radius:14px;
       background:
         radial-gradient(circle at 30% 30%, rgba(0,245,255,0.95), transparent 60%),
-        radial-gradient(circle at 70% 70%, rgba(255,43,214,0.95), transparent 55%),
-        linear-gradient(135deg, rgba(255,255,255,0.10), rgba(255,255,255,0.02));
+        radial-gradient(circle at 70% 70%, rgba(255,43,214,0.95), transparent 55%);
       border: 1px solid rgba(255,255,255,0.18);
-      box-shadow: 0 0 0 6px rgba(0,245,255,0.06), 0 0 0 12px rgba(255,43,214,0.04);
-      flex: 0 0 auto;
-    }
-    .brandTitle{
-      margin:0;
-      font-family: Orbitron, Inter, sans-serif;
-      font-weight: 800;
-      letter-spacing: .02em;
-      font-size: 16px;
-      line-height:1.15;
-    }
-    .brandSub{
-      display:block;
-      margin-top:4px;
-      color: var(--muted);
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing:.02em;
     }
 
-    .top-actions{
-      display:flex; gap:10px; flex-wrap:wrap;
+    .brandTitle{
+      font-family: Orbitron, sans-serif;
+      font-weight:800;
+      font-size:16px;
+    }
+
+    .brandSub{
+      font-size:12px;
+      color:var(--muted);
+    }
+
+    .top-actions,
+    .cta-row{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
     }
 
     .btn{
-      appearance:none;
-      border: 1px solid rgba(255,255,255,0.16);
+      border:1px solid rgba(255,255,255,0.16);
       background: rgba(255,255,255,0.06);
-      color: var(--text);
-      padding: 10px 12px;
-      border-radius: 14px;
+      color:var(--text);
+      padding:10px 12px;
+      border-radius:14px;
       text-decoration:none;
-      font-weight: 600;
-      font-size: 13px;
+      font-weight:600;
+      font-size:13px;
       display:inline-flex;
       align-items:center;
       gap:10px;
-      transition: transform .15s ease, border-color .15s ease, box-shadow .15s ease, background .15s ease;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
-      backdrop-filter: blur(8px);
       cursor:pointer;
     }
-    .btn:hover{
-      transform: translateY(-1px);
-      border-color: rgba(255,255,255,0.26);
-      box-shadow: 0 16px 40px rgba(0,0,0,0.35);
-      background: rgba(255,255,255,0.08);
-    }
+
     .btn-primary{
       border-color: rgba(0,245,255,0.35);
       background: linear-gradient(135deg, rgba(0,245,255,0.18), rgba(255,43,214,0.10));
-      box-shadow:
-        0 18px 50px rgba(0,245,255,0.12),
-        0 18px 55px rgba(255,43,214,0.10);
     }
-    .btn-primary:hover{ border-color: rgba(0,245,255,0.55); }
 
-    /* APK button (secondary emphasis) */
     .btn-secondary{
-      border-color: rgba(255,255,255,0.20);
       background: rgba(0,0,0,0.18);
-    }
-    .btn-secondary:hover{
-      border-color: rgba(255,255,255,0.32);
-      background: rgba(255,255,255,0.07);
     }
 
     .hero{
-      margin-top: 10px;
       display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      align-items: stretch;
+      grid-template-columns:1fr 1fr;
+      gap:16px;
     }
-    @media (max-width: 920px){
-      .hero{ grid-template-columns: 1fr; }
-      header{ flex-direction:column; align-items:flex-start; }
+
+    @media(max-width:920px){
+      .hero{grid-template-columns:1fr;}
+      header{flex-direction:column; align-items:flex-start;}
     }
 
     .card{
-      position:relative;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      overflow:hidden;
-    }
-    .card::before{
-      content:"";
-      position:absolute; inset:-2px;
-      background: linear-gradient(90deg, rgba(0,245,255,0.45), rgba(255,43,214,0.35), rgba(124,60,255,0.35));
-      filter: blur(18px);
-      opacity: .28;
-      pointer-events:none;
-    }
-    .card-inner{
-      position:relative;
-      padding: 22px;
-    }
-
-    .kicker{
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      padding: 8px 12px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.14);
-      background: rgba(0,0,0,0.18);
-      color: var(--muted);
-      font-size: 12px;
-      font-weight: 800;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-    }
-    .dot{
-      width:10px;height:10px;border-radius:999px;
-      background: var(--good);
-      box-shadow: 0 0 18px rgba(53,255,138,0.45);
-    }
-
-    .title{
-      margin: 14px 0 10px;
-      font-family: Orbitron, Inter, sans-serif;
-      font-weight: 800;
-      letter-spacing: .01em;
-      font-size: clamp(28px, 3.6vw, 44px);
-      line-height: 1.08;
-    }
-    .subtitle{
-      margin: 0 0 16px;
-      color: var(--muted);
-      font-size: 15px;
-      line-height: 1.65;
-      max-width: 62ch;
-    }
-
-    .badges{
-      display:flex; flex-wrap:wrap; gap:10px;
-      margin: 12px 0 16px;
-    }
-    .pill{
-      border: 1px solid rgba(255,255,255,0.14);
-      background: rgba(0,0,0,0.18);
-      padding: 10px 12px;
-      border-radius: 999px;
-      font-size: 13px;
-      color: rgba(234,240,255,0.86);
-      display:flex; align-items:center; gap:10px;
-      backdrop-filter: blur(8px);
-    }
-    .pill b{ font-weight: 800; }
-    .glyph{
-      width:18px;height:18px;
-      border-radius: 6px;
-      background: linear-gradient(135deg, rgba(0,245,255,0.95), rgba(255,43,214,0.85));
-      box-shadow: 0 0 22px rgba(0,245,255,0.14);
-      flex:0 0 auto;
-    }
-
-    .cta-row{
-      display:flex; gap:10px; flex-wrap:wrap;
-      margin-top: 12px;
-    }
-
-    /* LEFT: Logo block */
-    .logoCard{
-      display:flex;
-      flex-direction:column;
-      gap:14px;
-    }
-    .logoFrame{
-      width: 100%;
-      border-radius: 18px;
-      border: 1px solid rgba(255,255,255,0.14);
-      background: rgba(0,0,0,0.18);
-      padding: 16px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      min-height: 260px;
-    }
-    .logoFrame img{
-      max-width: 100%;
-      max-height: 260px;
-      width: auto;
-      height: auto;
-      object-fit: contain;
-      image-rendering: auto;
-      filter: drop-shadow(0 18px 40px rgba(0,0,0,0.35));
-    }
-
-    /* RIGHT: Carousel */
-    .carousel{
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-      height:100%;
-    }
-    .viewer{
-      border-radius: 18px;
-      border: 1px solid rgba(255,255,255,0.14);
-      background: rgba(0,0,0,0.18);
-      overflow:hidden;
-      position:relative;
-      min-height: 360px;
-    }
-    .slides{
-      display:flex;
-      width: 400%;
-      height:100%;
-      transform: translateX(0%);
-      transition: transform .35s ease;
-    }
-    .slide{
-      width: 25%;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding: 12px;
-    }
-    .slide img{
-      width: 100%;
-      height: 100%;
-      max-height: 520px;
-      object-fit: contain;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,0.10);
-      background: rgba(255,255,255,0.03);
-    }
-
-    .controls{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      flex-wrap:wrap;
-    }
-    .ctrl-left{
-      display:flex; gap:10px; align-items:center; flex-wrap:wrap;
-    }
-    .dots{
-      display:flex; gap:8px; align-items:center;
-      padding: 8px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.14);
-      background: rgba(0,0,0,0.18);
-      backdrop-filter: blur(8px);
-    }
-    .dotBtn{
-      width: 9px; height: 9px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.28);
-      background: rgba(255,255,255,0.12);
-      cursor:pointer;
-      padding:0;
-    }
-    .dotBtn.active{
-      background: linear-gradient(135deg, rgba(0,245,255,0.95), rgba(255,43,214,0.85));
-      border-color: rgba(255,255,255,0.0);
-      box-shadow: 0 0 18px rgba(0,245,255,0.18);
-    }
-
-    .hint{
-      color: rgba(234,240,255,0.60);
-      font-size: 12px;
-      line-height:1.4;
-    }
-
-    /* Sections below */
-    .section{
-      margin-top: 14px;
-    }
-
-    .grid{
-      margin-top: 12px;
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-    }
-    @media (max-width: 920px){
-      .grid{ grid-template-columns: 1fr; }
-    }
-
-    .h3{
-      margin:0 0 8px;
-      font-family: Orbitron, Inter, sans-serif;
-      letter-spacing:.02em;
-      font-size: 16px;
-      font-weight: 800;
-    }
-    .p{
-      margin:0;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.6;
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      padding:22px;
     }
 
     footer{
-      margin-top: 18px;
-      padding-top: 12px;
-      color: rgba(234,240,255,0.55);
-      font-size: 12px;
+      margin-top:18px;
+      font-size:12px;
+      color:var(--muted);
       display:flex;
       justify-content:space-between;
-      gap:10px;
       flex-wrap:wrap;
     }
-    .link{
-      color: rgba(234,240,255,0.78);
-      text-decoration:none;
-      border-bottom: 1px dashed rgba(234,240,255,0.28);
-    }
-    .link:hover{ color: rgba(234,240,255,0.95); border-bottom-color: rgba(234,240,255,0.5); }
 
-    .counter-wrap{
-      margin-top: 14px;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      width:100%;
-    }
-
-    .sr-only{
-      position:absolute;
-      width:1px;height:1px;
-      padding:0;margin:-1px;
-      overflow:hidden;clip:rect(0,0,0,0);
-      border:0;
-    }
+    .link{color:var(--text); text-decoration:none;}
   </style>
 </head>
 
 <body>
-  <div class="wrap">
-    <header>
-      <a class="brand" href="#top" aria-label="Blink to Fly">
-        <div class="logoBadge" aria-hidden="true"></div>
-        <div>
-          <div class="brandTitle">Blink to Fly</div>
-          <span class="brandSub">Android • Управление взглядом</span>
-        </div>
-      </a>
+<div class="wrap">
 
-      <div class="top-actions">
-        <a class="btn" href="#how">Как играть</a>
-
-        <a class="btn btn-primary" target="_blank" rel="noopener"
-           href="https://www.rustore.ru/catalog/app/com.blinktofly.game">
-          <span class="glyph" aria-hidden="true"></span>
-          Скачать в RuStore
-        </a>
-
-        <a class="btn btn-secondary" href="https://github.com/blinktofly/blinktofly.github.io/releases/download/1.2.5/blink_to_fly_1.2.5.apk" download>
-          Скачать APK
-        </a>
-      </div>
-    </header>
-
-    <main id="top" class="hero">
-      <!-- LEFT: logo + текст -->
-      <section class="card">
-        <div class="card-inner logoCard">
-          <div class="kicker"><span class="dot" aria-hidden="true"></span> CYBER ARCADE</div>
-
-          <h1 class="title">Моргни и взлетай.</h1>
-          <p class="subtitle">
-            <b>Blink to Fly</b> — игра, где основная механика простая и кайфовая:
-            <b>моргнул — птичка подпрыгнула</b>. А “<b>управление взглядом</b>” добавляет вау-эффект и атмосферу будущего.
-          </p>
-
-          <div class="logoFrame">
-            <img src="logo.jpg" alt="Blink to Fly — логотип" loading="eager" />
-          </div>
-
-          <div class="badges">
-            <div class="pill"><span class="glyph" aria-hidden="true"></span> <b>Механика:</b> управление взглядом</div>
-            <div class="pill"><span class="glyph" aria-hidden="true"></span> <b>Реализация:</b> моргание глазами</div>
-            <div class="pill"><span class="glyph" aria-hidden="true"></span> <b>Сессии:</b> играем до максимума</div>
-          </div>
-
-          <div class="cta-row">
-            <a class="btn btn-primary" target="_blank" rel="noopener"
-               href="https://www.rustore.ru/catalog/app/com.blinktofly.game">
-              <span class="glyph" aria-hidden="true"></span>
-              Скачать в RuStore
-            </a>
-
-            <a class="btn btn-secondary" href="https://github.com/blinktofly/blinktofly.github.io/releases/download/1.2.5/blink_to_fly_1.2.5.apk" download>
-              Скачать APK
-            </a>
-
-            <a class="btn" href="#features">Фишки</a>
-          </div>
-        </div>
-      </section>
-
-      <!-- RIGHT: carousel 1..4 -->
-      <aside class="card" aria-label="Скриншоты игры">
-        <div class="card-inner carousel">
-          <div class="kicker"><span class="dot" aria-hidden="true"></span> Скриншоты игры</div>
-
-          <div class="viewer" id="viewer">
-            <div class="slides" id="slides">
-              <div class="slide"><img src="1.jpg" alt="Скриншот 1" loading="lazy"></div>
-              <div class="slide"><img src="2.jpg" alt="Скриншот 2" loading="lazy"></div>
-              <div class="slide"><img src="3.jpg" alt="Скриншот 3" loading="lazy"></div>
-              <div class="slide"><img src="4.jpg" alt="Скриншот 4" loading="lazy"></div>
-            </div>
-          </div>
-
-          <div class="controls">
-            <div class="ctrl-left">
-              <button class="btn" id="prev" type="button" aria-label="Предыдущий скрин">←</button>
-              <button class="btn" id="next" type="button" aria-label="Следующий скрин">→</button>
-
-              <div class="dots" aria-label="Выбор скрина">
-                <button class="dotBtn active" type="button" data-i="0" aria-label="Скрин 1"></button>
-                <button class="dotBtn" type="button" data-i="1" aria-label="Скрин 2"></button>
-                <button class="dotBtn" type="button" data-i="2" aria-label="Скрин 3"></button>
-                <button class="dotBtn" type="button" data-i="3" aria-label="Скрин 4"></button>
-              </div>
-            </div>
-
-            <div class="hint">
-              Автопрокрутка • свайп на телефоне • кликай точки
-            </div>
-          </div>
-        </div>
-      </aside>
-    </main>
-
-    <section id="features" class="section grid" aria-label="Фишки">
-      <article class="card">
-        <div class="card-inner">
-          <h3 class="h3">Чистая механика</h3>
-          <p class="p">Моргнул — прыжок. Идеально для “ещё одну попытку” и коротких заходов.</p>
-        </div>
-      </article>
-
-      <article class="card">
-        <div class="card-inner">
-          <h3 class="h3">Управление взглядом</h3>
-          <p class="p">Как маркетинговый хук: звучит футуристично и выделяет игру среди обычных аркад.</p>
-        </div>
-      </article>
-
-      <article class="card">
-        <div class="card-inner">
-          <h3 class="h3">Рекорды</h3>
-          <p class="p">Цель простая: дольше продержаться, точнее тайминг, выше счёт.</p>
-        </div>
-      </article>
-    </section>
-
-    <section id="how" class="section card" aria-label="Как играть">
-      <div class="card-inner">
-        <h3 class="h3">Как играть</h3>
-        <p class="p">
-          1) Запусти игру и выбери игру глазами.<br/>
-          2) Следи за ситуацией — “управление взглядом” создаёт эффект контроля.<br/>
-          3) Главный скилл: моргай вовремя — <b>птичка подпрыгивает</b> и ты проходишь препятствия.<br/>
-          4) Тренируй тайминг и бей рекорды.
-        </p>
-
-        <div class="cta-row" style="margin-top:14px;">
-          <a class="btn btn-primary" target="_blank" rel="noopener"
-             href="https://www.rustore.ru/catalog/app/com.blinktofly.game">
-            <span class="glyph" aria-hidden="true"></span>
-            Скачать в RuStore
-          </a>
-
-          <a class="btn btn-secondary" href="https://github.com/blinktofly/blinktofly.github.io/releases/download/1.2.5/blink_to_fly_1.2.5.apk" download>
-            Скачать APK
-          </a>
-
-          <a class="btn" href="#top">Наверх</a>
-        </div>
-      </div>
-    </section>
-
-    <footer>
-      <div>© <span id="y"></span> Blink to Fly</div>
-      <div>
-        <a class="link" target="_blank" rel="noopener" href="https://www.rustore.ru/catalog/app/com.blinktofly.game">RuStore</a>
-        <span aria-hidden="true"> • </span>
-        <a class="link" href="#features">Фишки</a>
-      </div>
-    </footer>
-
-    <!-- Counter centered at the very bottom -->
-    <div class="counter-wrap" aria-label="">
-      <img src="https://hitscounter.dev/api/hit?url=https%3A%2F%2Fblinktofly.github.io%2F&label=&icon=bar-chart-fill&color=%230dcaf0&message=&style=flat&tz=UTC">
-
-                    
+<header>
+  <a class="brand" href="#top">
+    <div class="logoBadge"></div>
+    <div>
+      <div class="brandTitle">Blink to Fly</div>
+      <div class="brandSub">Android • Управление взглядом</div>
     </div>
+  </a>
+
+  <div class="top-actions">
+    <a class="btn" href="#how">Как играть</a>
+
+    <a class="btn btn-primary" target="_blank" rel="noopener"
+       href="https://play.google.com/store/apps/details?id=com.blinktofly.game">
+      Скачать в Google Play
+    </a>
+
+    <a class="btn btn-primary" target="_blank" rel="noopener"
+       href="https://www.rustore.ru/catalog/app/com.blinktofly.game">
+      Скачать в RuStore
+    </a>
+
+    <a class="btn btn-secondary"
+       href="https://github.com/blinktofly/blinktofly.github.io/releases/download/1.2.5/blink_to_fly_1.2.5.apk"
+       download>
+      Скачать APK
+    </a>
   </div>
+</header>
 
-  <script>
-    // year
-    document.getElementById('y').textContent = new Date().getFullYear();
+<main id="top" class="hero">
 
-    // carousel
-    const slides = document.getElementById('slides');
-    const dots = Array.from(document.querySelectorAll('.dotBtn'));
-    const prev = document.getElementById('prev');
-    const next = document.getElementById('next');
-    const viewer = document.getElementById('viewer');
+<section class="card">
+  <h1>Моргни и взлетай</h1>
+  <p><b>Blink to Fly</b> — моргнул → птичка подпрыгнула.</p>
 
-    let i = 0;
-    let timer = null;
-    const total = 4;
-    const AUTO_MS = 3500;
+  <div class="cta-row">
+    <a class="btn btn-primary" target="_blank" rel="noopener"
+       href="https://play.google.com/store/apps/details?id=com.blinktofly.game">
+      Скачать в Google Play
+    </a>
 
-    function setIndex(n){
-      i = (n + total) % total;
-      slides.style.transform = `translateX(${-25 * i}%)`;
-      dots.forEach((d, idx) => d.classList.toggle('active', idx === i));
-    }
+    <a class="btn btn-primary" target="_blank" rel="noopener"
+       href="https://www.rustore.ru/catalog/app/com.blinktofly.game">
+      Скачать в RuStore
+    </a>
 
-    function startAuto(){
-      stopAuto();
-      timer = setInterval(() => setIndex(i + 1), AUTO_MS);
-    }
-    function stopAuto(){
-      if (timer) { clearInterval(timer); timer = null; }
-    }
+    <a class="btn btn-secondary"
+       href="https://github.com/blinktofly/blinktofly.github.io/releases/download/1.2.5/blink_to_fly_1.2.5.apk"
+       download>
+      Скачать APK
+    </a>
+  </div>
+</section>
 
-    prev.addEventListener('click', () => { setIndex(i - 1); startAuto(); });
-    next.addEventListener('click', () => { setIndex(i + 1); startAuto(); });
+<section class="card" id="how">
+  <h3>Как играть</h3>
+  <p>Моргай вовремя — проходи препятствия — бей рекорды.</p>
 
-    dots.forEach(d => {
-      d.addEventListener('click', () => {
-        setIndex(parseInt(d.dataset.i, 10));
-        startAuto();
-      });
-    });
+  <div class="cta-row">
+    <a class="btn btn-primary" target="_blank" rel="noopener"
+       href="https://play.google.com/store/apps/details?id=com.blinktofly.game">
+      Скачать в Google Play
+    </a>
 
-    // Touch swipe (mobile)
-    let x0 = null;
-    viewer.addEventListener('touchstart', (e) => {
-      x0 = e.touches[0].clientX;
-      stopAuto();
-    }, {passive:true});
+    <a class="btn btn-primary" target="_blank" rel="noopener"
+       href="https://www.rustore.ru/catalog/app/com.blinktofly.game">
+      Скачать в RuStore
+    </a>
 
-    viewer.addEventListener('touchend', (e) => {
-      if (x0 === null) return;
-      const x1 = (e.changedTouches && e.changedTouches[0]) ? e.changedTouches[0].clientX : x0;
-      const dx = x1 - x0;
-      if (Math.abs(dx) > 40){
-        setIndex(dx > 0 ? i - 1 : i + 1);
-      }
-      x0 = null;
-      startAuto();
-    }, {passive:true});
+    <a class="btn btn-secondary"
+       href="https://github.com/blinktofly/blinktofly.github.io/releases/download/1.2.5/blink_to_fly_1.2.5.apk"
+       download>
+      Скачать APK
+    </a>
+  </div>
+</section>
 
-    // Pause on hover (desktop)
-    viewer.addEventListener('mouseenter', stopAuto);
-    viewer.addEventListener('mouseleave', startAuto);
+</main>
 
-    // init
-    setIndex(0);
-    startAuto();
-  </script>
+<footer>
+  <div>© <span id="y"></span> Blink to Fly</div>
+  <div>
+    <a class="link" href="https://play.google.com/store/apps/details?id=com.blinktofly.game">Google Play</a> •
+    <a class="link" href="https://www.rustore.ru/catalog/app/com.blinktofly.game">RuStore</a>
+  </div>
+</footer>
+
+</div>
+
+<script>
+  document.getElementById('y').textContent = new Date().getFullYear();
+</script>
 </body>
 </html>
