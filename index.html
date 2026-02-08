@@ -59,47 +59,57 @@
     .brand{
       display:flex; align-items:center; gap:12px;
       text-decoration:none; color:inherit;
+      min-width: 240px;
     }
 
     .logoBadge{
       width:44px;height:44px;border-radius:14px;
       background:
         radial-gradient(circle at 30% 30%, rgba(0,245,255,0.95), transparent 60%),
-        radial-gradient(circle at 70% 70%, rgba(255,43,214,0.95), transparent 55%);
+        radial-gradient(circle at 70% 70%, rgba(255,43,214,0.95), transparent 55%),
+        linear-gradient(135deg, rgba(255,255,255,0.10), rgba(255,255,255,0.02));
       border: 1px solid rgba(255,255,255,0.18);
+      box-shadow: 0 0 0 6px rgba(0,245,255,0.06), 0 0 0 12px rgba(255,43,214,0.04);
     }
 
     .brandTitle{
-      font-family: Orbitron, sans-serif;
-      font-weight:800;
-      font-size:16px;
+      margin:0;
+      font-family: Orbitron, Inter, sans-serif;
+      font-weight: 800;
+      letter-spacing: .02em;
+      font-size: 16px;
     }
 
     .brandSub{
-      font-size:12px;
-      color:var(--muted);
+      display:block;
+      margin-top:4px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 600;
     }
 
-    .top-actions,
-    .cta-row{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
+    .top-actions{
+      display:flex; gap:10px; flex-wrap:wrap;
     }
 
     .btn{
-      border:1px solid rgba(255,255,255,0.16);
+      border: 1px solid rgba(255,255,255,0.16);
       background: rgba(255,255,255,0.06);
-      color:var(--text);
-      padding:10px 12px;
-      border-radius:14px;
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 14px;
       text-decoration:none;
-      font-weight:600;
-      font-size:13px;
+      font-weight: 600;
+      font-size: 13px;
       display:inline-flex;
       align-items:center;
       gap:10px;
+      transition: transform .15s ease;
       cursor:pointer;
+    }
+
+    .btn:hover{
+      transform: translateY(-1px);
     }
 
     .btn-primary{
@@ -108,135 +118,165 @@
     }
 
     .btn-secondary{
+      border-color: rgba(255,255,255,0.20);
       background: rgba(0,0,0,0.18);
     }
 
     .hero{
+      margin-top: 10px;
       display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:16px;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
     }
 
-    @media(max-width:920px){
-      .hero{grid-template-columns:1fr;}
-      header{flex-direction:column; align-items:flex-start;}
+    @media (max-width: 920px){
+      .hero{ grid-template-columns: 1fr; }
+      header{ flex-direction:column; align-items:flex-start; }
     }
 
     .card{
-      background:var(--card);
-      border:1px solid var(--border);
-      border-radius:var(--radius);
-      padding:22px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+
+    .card-inner{
+      padding: 22px;
+    }
+
+    .title{
+      margin: 14px 0 10px;
+      font-family: Orbitron, Inter, sans-serif;
+      font-weight: 800;
+      font-size: clamp(28px, 3.6vw, 44px);
+    }
+
+    .subtitle{
+      margin: 0 0 16px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    .cta-row{
+      display:flex; gap:10px; flex-wrap:wrap;
+      margin-top: 12px;
     }
 
     footer{
-      margin-top:18px;
-      font-size:12px;
-      color:var(--muted);
+      margin-top: 18px;
+      padding-top: 12px;
+      color: rgba(234,240,255,0.55);
+      font-size: 12px;
       display:flex;
       justify-content:space-between;
-      flex-wrap:wrap;
     }
-
-    .link{color:var(--text); text-decoration:none;}
   </style>
 </head>
 
 <body>
-<div class="wrap">
+  <div class="wrap">
+    <header>
+      <a class="brand" href="#top">
+        <div class="logoBadge"></div>
+        <div>
+          <div class="brandTitle">Blink to Fly</div>
+          <span class="brandSub">Android • Управление взглядом</span>
+        </div>
+      </a>
 
-<header>
-  <a class="brand" href="#top">
-    <div class="logoBadge"></div>
-    <div>
-      <div class="brandTitle">Blink to Fly</div>
-      <div class="brandSub">Android • Управление взглядом</div>
-    </div>
-  </a>
+      <div class="top-actions">
+        <a class="btn" href="#how">Как играть</a>
 
-  <div class="top-actions">
-    <a class="btn" href="#how">Как играть</a>
+        <!-- ✅ Google Play FIRST -->
+        <a class="btn btn-primary" target="_blank" rel="noopener"
+           href="https://play.google.com/store/apps/details?id=com.blinktofly.game">
+          Скачать в Google Play
+        </a>
 
-    <a class="btn btn-primary" target="_blank" rel="noopener"
-       href="https://play.google.com/store/apps/details?id=com.blinktofly.game">
-      Скачать в Google Play
-    </a>
+        <!-- RuStore -->
+        <a class="btn btn-primary" target="_blank" rel="noopener"
+           href="https://www.rustore.ru/catalog/app/com.blinktofly.game">
+          Скачать в RuStore
+        </a>
 
-    <a class="btn btn-primary" target="_blank" rel="noopener"
-       href="https://www.rustore.ru/catalog/app/com.blinktofly.game">
-      Скачать в RuStore
-    </a>
+        <a class="btn btn-secondary"
+           href="https://github.com/blinktofly/blinktofly.github.io/releases/download/1.2.5/blink_to_fly_1.2.5.apk" download>
+          Скачать APK
+        </a>
+      </div>
+    </header>
 
-    <a class="btn btn-secondary"
-       href="https://github.com/blinktofly/blinktofly.github.io/releases/download/1.2.5/blink_to_fly_1.2.5.apk"
-       download>
-      Скачать APK
-    </a>
+    <main id="top" class="hero">
+
+      <section class="card">
+        <div class="card-inner">
+          <h1 class="title">Моргни и взлетай.</h1>
+          <p class="subtitle">
+            <b>Blink to Fly</b> — игра, где основная механика простая:
+            <b>моргнул — птичка подпрыгнула</b>.
+          </p>
+
+          <div class="cta-row">
+
+            <!-- ✅ Google Play FIRST -->
+            <a class="btn btn-primary" target="_blank" rel="noopener"
+               href="https://play.google.com/store/apps/details?id=com.blinktofly.game">
+              Скачать в Google Play
+            </a>
+
+            <!-- RuStore -->
+            <a class="btn btn-primary" target="_blank" rel="noopener"
+               href="https://www.rustore.ru/catalog/app/com.blinktofly.game">
+              Скачать в RuStore
+            </a>
+
+            <a class="btn btn-secondary"
+               href="https://github.com/blinktofly/blinktofly.github.io/releases/download/1.2.5/blink_to_fly_1.2.5.apk" download>
+              Скачать APK
+            </a>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <section id="how" class="card" style="margin-top:16px;">
+      <div class="card-inner">
+        <h3>Как играть</h3>
+        <p class="subtitle">
+          1) Запусти игру и выбери игру глазами.<br/>
+          2) Моргай вовремя — птичка подпрыгивает.<br/>
+          3) Бей рекорды!
+        </p>
+
+        <div class="cta-row">
+
+          <!-- ✅ Google Play FIRST -->
+          <a class="btn btn-primary" target="_blank" rel="noopener"
+             href="https://play.google.com/store/apps/details?id=com.blinktofly.game">
+            Скачать в Google Play
+          </a>
+
+          <!-- RuStore -->
+          <a class="btn btn-primary" target="_blank" rel="noopener"
+             href="https://www.rustore.ru/catalog/app/com.blinktofly.game">
+            Скачать в RuStore
+          </a>
+
+          <a class="btn btn-secondary"
+             href="https://github.com/blinktofly/blinktofly.github.io/releases/download/1.2.5/blink_to_fly_1.2.5.apk" download>
+            Скачать APK
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div>© Blink to Fly</div>
+    </footer>
   </div>
-</header>
-
-<main id="top" class="hero">
-
-<section class="card">
-  <h1>Моргни и взлетай</h1>
-  <p><b>Blink to Fly</b> — моргнул → птичка подпрыгнула.</p>
-
-  <div class="cta-row">
-    <a class="btn btn-primary" target="_blank" rel="noopener"
-       href="https://play.google.com/store/apps/details?id=com.blinktofly.game">
-      Скачать в Google Play
-    </a>
-
-    <a class="btn btn-primary" target="_blank" rel="noopener"
-       href="https://www.rustore.ru/catalog/app/com.blinktofly.game">
-      Скачать в RuStore
-    </a>
-
-    <a class="btn btn-secondary"
-       href="https://github.com/blinktofly/blinktofly.github.io/releases/download/1.2.5/blink_to_fly_1.2.5.apk"
-       download>
-      Скачать APK
-    </a>
-  </div>
-</section>
-
-<section class="card" id="how">
-  <h3>Как играть</h3>
-  <p>Моргай вовремя — проходи препятствия — бей рекорды.</p>
-
-  <div class="cta-row">
-    <a class="btn btn-primary" target="_blank" rel="noopener"
-       href="https://play.google.com/store/apps/details?id=com.blinktofly.game">
-      Скачать в Google Play
-    </a>
-
-    <a class="btn btn-primary" target="_blank" rel="noopener"
-       href="https://www.rustore.ru/catalog/app/com.blinktofly.game">
-      Скачать в RuStore
-    </a>
-
-    <a class="btn btn-secondary"
-       href="https://github.com/blinktofly/blinktofly.github.io/releases/download/1.2.5/blink_to_fly_1.2.5.apk"
-       download>
-      Скачать APK
-    </a>
-  </div>
-</section>
-
-</main>
-
-<footer>
-  <div>© <span id="y"></span> Blink to Fly</div>
-  <div>
-    <a class="link" href="https://play.google.com/store/apps/details?id=com.blinktofly.game">Google Play</a> •
-    <a class="link" href="https://www.rustore.ru/catalog/app/com.blinktofly.game">RuStore</a>
-  </div>
-</footer>
-
-</div>
-
-<script>
-  document.getElementById('y').textContent = new Date().getFullYear();
-</script>
 </body>
 </html>
